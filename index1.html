@@ -4,52 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Practice</title>
+    <title>Document</title>
   </head>
   <body>
-    <h1>Practice</h1>
-    <script>
-      var persons = [
-        {
-          name: 'John',
-          age: 28
-        },
-        {
-          name: 'Mary',
-          age: 20
-        },
-        {
-          name: 'Nick',
-          age: 15
-        },
-        {
-          name: 'Jane',
-          age: 40
-        }
-      ];
-
-      var x = 0;
-
-      var every = persons.every(person => {
-        console.log(++x);
-        console.log(`${++x}-${person.age >= 18}`);
-        return person.age >= 18;
-      });
-      console.log(every);
-      console.log('--------------');
-
-      var everyPersonCanVote = true;
-      var onlySomePersonsCanVote = false;
-
-      for (var i = 0; i < persons.length; i++) {
-        if (persons[i].age < 18) {
-          everyPersonCanVote = false;
-          onlySomePersonsCanVote = true;
-        }
-      }
-
-      console.log(`Every Person Can Vote - ${everyPersonCanVote}`);
-      console.log(`Only some persons can vote - ${onlySomePersonsCanVote}`);
-    </script>
+    <h1>Bozo</h1>
+    <script></script>
   </body>
 </html>
+<!--************ FIZZBUZZ ************-->
+<!-- for (let x = 1; x < 100; x++) {
+    if (x % 15 === 0) {
+      console.log('FizzBuzz');
+    } else if (x % 5 === 0) {
+      console.log('Buzz');
+    } else if (x % 3 === 0) {
+      console.log('Fizz');
+    } else {
+      console.log(x);
+    }
+  } -->
