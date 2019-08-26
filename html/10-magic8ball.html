@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <title>Magic 8 Ball</title>
+  </head>
+  <body>
+    <div class="container mt-4">
+      <div class="jumbotron">
+        <h1>Ask A Question</h1>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="" />
+          <div class="input-group-append">
+            <button class="btn btn-dark" type="button">
+              Click Me
+            </button>
+          </div>
+        </div>
+        <div class="message"><h3></h3></div>
+      </div>
+    </div>
+    <script>
+      const answerArray = [
+        'It will work',
+        'Maybe Not',
+        'Probably Not',
+        'I Dont Know',
+        'What Kind Of Question Is That'
+      ];
+
+      const message = document.querySelector('.message h3');
+      const question = document.querySelector('input');
+      const button = document.querySelector('button');
+
+      button.addEventListener('click', function() {
+        console.log(question.value);
+        let response = Math.floor(Math.random() * answerArray.length);
+        message.innerHTML = answerArray[response];
+        question.value = '';
+      });
+    </script>
+  </body>
+</html>
+<!-- <input type="text" placeholder="" />
+  <button class="btn btn-dark ml-2 type="button">Click Me</button> -->
