@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <style>
+      .hidden {
+        /* background: red; */
+        display: none;
+      }
+      .message {
+        font-size: 2em;
+        /* text-align: center; */
+        margin-bottom: 10px;
+      }
+    </style>
+    <title>Word Scramble</title>
+  </head>
+  <body>
+    <div class="container mt-4">
+      <div class="jumbotron">
+        <div class="message"></div>
+        <div>
+          <input type="text" class="hidden" />
+          <button class="btn btn-dark" type="button">Start</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      const message = document.querySelector('.message');
+      const guessInput = document.querySelector('input');
+      const button = document.querySelector('button');
+
+      let inPlay = false;
+      let scramble = '';
+      let scrambled = '';
+      let score = 0;
+
+      const myArray = [
+        'javascript',
+        'css',
+        'html',
+        'react',
+        'bootstrap',
+        'molly'
+      ];
+
+      button.addEventListener('click', function() {
+        if (!inPlay) {
+          inPlay = true;
+          button.innerHTML = `Guess`;
+          guessInput.classList.toggle('hidden');
+          scramble = createWord();
+          scrambled = randomArray(scramble.split('')).join('');
+          message.innerHTML = `${scrambled} -- ${scramble}`;
+        } else {
+          let tempGuess = guessInput.value;
+          score++;
+          console.log(tempGuess);
+          if (tempGuess === scramble) {
+            console.log('Correct');
+            inPlay = false;
+            message.innerHTML = `Correct it was ${scramble}. It took ${score} guesses`;
+            button.innerHTML = 'Start';
+            guessInput.classList.toggle('hidden');
+            guessInput.value = '';
+          } else {
+            console.log('Guess Again');
+          }
+        }
+      });
+
+      function createWord() {
+        let randomIndex = Math.floor(Math.random() * myArray.length);
+        let tempWord = myArray[randomIndex];
+        // console.log(rand.join(''));
+        return tempWord;
+      }
+
+      function randomArray(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+          let temp = arr[i];
+          let j = Math.floor(Math.random() * (i + 1));
+          arr[i] = arr[j];
+          arr[j] = temp;
+        }
+        return arr;
+      }
+    </script>
+  </body>
+</html>
