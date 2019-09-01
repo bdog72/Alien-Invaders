@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+
+    <style></style>
+    <title>Click Shape</title>
+  </head>
+  <body>
+    <div class="container mt-3">
+      <button class="btn btn-dark" type="button">Start</button>
+      <div class="message"></div>
+      <div class="game-area"></div>
+    </div>
+    <script>
+      let inPlay = false;
+      let playArea = {};
+      let start;
+
+      const button = document.querySelector('button');
+      const message = document.querySelector('.message');
+      messanger('Click Start Button');
+      const gameArea = document.querySelector('.game-area');
+
+      button.addEventListener('click', function() {
+        if (!inPlay) {
+          inPlay = true;
+          button.style.display = 'none';
+          messanger('Click The Circles as Quickly as You See Them');
+          showBox();
+        }
+      });
+
+      function showBox() {
+        // start = new Date().getTime();
+        playArea.timer = setTimeout(myBox, randomNumber(3000));
+      }
+
+      function myBox() {
+        let el = document.createElement('div');
+        el.classList.add('box');
+        el.style.background = `${randomColor()}`;
+        el.style.width = `${randomNumber(30) + 70}px`;
+        el.style.height = `${randomNumber(30) + 70}px`;
+        el.style.borderRadius = `${randomNumber(50)}%`;
+        el.style.position = 'relative';
+        el.style.top = `${randomNumber(200)}px`;
+        el.style.left = `${randomNumber(200)}px`;
+        el.addEventListener('click', hit);
+        el.start = new Date().getTime();
+        gameArea.appendChild(el);
+      }
+
+      const hit = e => {
+        let end = new Date().getTime();
+        let start = e.target.start;
+        let duration = ((end - start) / 1000).toFixed(2);
+        messanger(`It took ${duration} seconds to click`);
+        clearTimeout(playArea.timer);
+        gameArea.children[0].remove();
+        // gameArea.innerHTML = '';
+        // myBox();
+        // showBox();
+        playArea.timer = setTimeout(myBox, randomNumber(3000));
+      };
+
+      const randomColor = () => {
+        return `#${Math.random()
+          .toString(16)
+          .substr(-6)}`;
+      };
+
+      const randomNumber = num => {
+        let tempValue = Math.floor(Math.random() * num);
+        return tempValue;
+      };
+
+      function messanger(mes) {
+        message.innerHTML = mes;
+      }
+    </script>
+  </body>
+</html>
