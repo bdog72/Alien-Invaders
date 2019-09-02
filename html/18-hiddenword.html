@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Hidden Word Game</title>
+    <style>
+      .box {
+        display: inline-block;
+        padding: 10px;
+        width: 100px;
+        height: 40px;
+        border: 1px solid black;
+        text-align: center;
+      }
+      .hidden {
+        visibility: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      window.addEventListener('load', init);
+      const myWords = [
+        'javascript',
+        'html',
+        'css',
+        'bootstrap',
+        'react',
+        'python'
+      ];
+      let cur = 0;
+      let startTime;
+      function init() {
+        let div = document.createElement('div');
+        div.setAttribute('class', 'message');
+        div.innerText = 'Press start button';
+        document.body.appendChild(div);
+        let button = document.createElement('button');
+        button.type = 'button';
+        button.innerText = 'Start Game';
+        button.addEventListener('click', start);
+        document.body.appendChild(button);
+        let div1 = document.createElement('div');
+        div1.classList.add('game');
+        document.body.appendChild(div1);
+      }
+
+      function start() {
+        cur = 0;
+        startTime = Date.parse(new Date());
+        console.log(startTime);
+        this.style.display = 'none';
+        let tempArr = myWords.slice(0);
+        tempArr.sort(function(a, b) {
+          return 0.5 - Math.random();
+        });
+        myWords.sort(function(a, b) {
+          return 0.5 - Math.random();
+        });
+        const game = document.querySelector('.game');
+        tempArr.forEach(function(item) {
+          let temp = item.split('');
+          temp.sort(function(a, b) {
+            return 0.5 - Math.random();
+          });
+          let temp1 = temp.join('');
+          let div = document.createElement('div');
+          div.innerText = 'Select';
+          div.classList.add('box');
+          div.style.backgroundColor = 'red';
+          div.word = item;
+          div.addEventListener('mouseenter', function() {
+            div.style.backgroundColor = 'white';
+            div.innerText = temp1;
+          });
+          div.addEventListener('mouseleave', function() {
+            div.style.backgroundColor = 'red';
+            div.innerText = 'Select';
+          });
+          div.addEventListener('click', function() {
+            if (div.word === myWords[cur]) {
+              console.log('Right');
+              this.classList.add('hidden');
+              cur++;
+              nextWord();
+            } else {
+              console.log('Wrong');
+            }
+          });
+          game.appendChild(div);
+        });
+        nextWord();
+      }
+      function nextWord() {
+        if (cur >= myWords.length) {
+          let endTime = Date.parse(new Date());
+          let duration = (endTime - startTime) / 1000;
+          document.querySelector('button').style.display = 'block';
+          document.querySelector('.game').innerHTML = '';
+          message('Game Over, you played for ' + duration + ' seconds');
+        } else {
+          message('Select this Word ' + myWords[cur]);
+        }
+      }
+
+      function message(output) {
+        document.querySelector('.message').innerHTML = output;
+      }
+    </script>
+
+    <!-- <script>
+      window.addEventListener('load', init);
+
+      const myWords = [
+        'javascript',
+        'html',
+        'bootstrap',
+        'css',
+        'react',
+        'python'
+      ];
+
+      let cur = 0;
+
+      function init() {
+        // created a div
+        let div = document.createElement('div');
+        div.setAttribute('class', 'message');
+        div.innerText = 'Press Start Button';
+        document.body.appendChild(div);
+        // created a button
+        let button = document.createElement('button');
+        button.type = 'button';
+        button.innerText = 'Start Game';
+        button.addEventListener('click', start);
+        document.body.appendChild(button);
+        // created another div
+        let div1 = document.createElement('div');
+        div1.classList.add('game');
+        document.body.appendChild(div1);
+      }
+
+      function start() {
+        let cur = 0;
+        this.style.display = 'none';
+        myWords.sort(function(a, b) {
+          return 0.5 - Math.random();
+        });
+
+        const game = document.querySelector('.game');
+        // game.style.border = '1px solid black';
+        // game.style.height = '10px';
+        // game.style.width = '100px';
+
+        myWords.forEach(function(item) {
+          let temp = item.split('');
+          temp.sort(function(a, b) {
+            return 0.5 - Math.random();
+          });
+          let temp1 = temp.join('');
+          let div = document.createElement('div');
+          div.innerText = 'select';
+          div.classList.add('box');
+          div.style.background = 'red';
+          div.word = item;
+          div.addEventListener('mouseenter', function() {
+            div.style.background = 'white';
+            div.innerText = temp1;
+          });
+
+          div.addEventListener('mouseleave', function() {
+            div.style.background = 'red';
+            div.innerText = 'Select';
+          });
+          div.addEventListener('click', function() {
+            console.log(this.word);
+            cur++;
+            nextWord();
+          });
+          game.appendChild(div);
+          // console.log(temp1);
+        });
+        nextWord();
+      }
+
+      function nextWord() {
+        console.log(cur);
+        message(`Select This Word ${myWords[cur]}`);
+      }
+
+      function message(output) {
+        document.querySelector('.message').innerHTML = output;
+      }
+    </script> -->
+  </body>
+</html>
