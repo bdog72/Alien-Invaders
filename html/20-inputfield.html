@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Input Field</title>
+    <style>
+      textarea {
+        width: 400px;
+        height: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <textarea class="text-limits"></textarea>
+      <div class="output"></div>
+    </div>
+    <script>
+      const output = document.querySelector('.output');
+      const textLimits = document.querySelector('.text-limits');
+
+      textLimits.addEventListener('change', textCounter);
+      textLimits.addEventListener('keyup', textCounter);
+      textLimits.addEventListener('keydown', textCounter);
+
+      ['keyup', 'keydown', 'change'].forEach(function(e) {
+        textLimits.addEventListener(e, textCounter);
+      });
+
+      const maxLength = 20;
+      const warningLength = 15;
+
+      function textCounter(e) {
+        let count = textLimits.value.length;
+        if (count > maxLength) {
+          textLimits.value = textLimits.value.substring(0, maxLength);
+        }
+        if (count > warningLength) {
+          output.style.color = 'red';
+        } else {
+          output.style.color = 'black';
+        }
+        output.innerHTML = maxLength - count + ' characters left';
+        console.log(count);
+      }
+    </script>
+  </body>
+</html>
