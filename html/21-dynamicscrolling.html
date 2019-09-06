@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Dynamic Scrolling</title>
+    <style>
+      #c-element {
+        background: #c9c9c9;
+        width: 400px;
+        font-size: 1em;
+        position: relative;
+        border: 1px solid black;
+        overflow: hidden;
+        /* height: 100vh; */
+        /* height: 90%; */
+      }
+
+      #c-element #s-element {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <input type="number" value="5" />
+      <div class="output"></div>
+      <div id="c-element">
+        <div id="s-element"></div>
+      </div>
+      <button>Click to Stop</button>
+    </div>
+
+    <script>
+      const button = document.querySelector('button');
+      const cElement = document.getElementById('c-element');
+      const sElement = document.getElementById('s-element');
+      const input = document.querySelector('input');
+      const output = document.querySelector('.output');
+
+      let scroller = true;
+
+      const content = `<p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi fuga sunt
+      odio incidunt molestiae obcaecati velit voluptates maiores, blanditiis
+      dolores iste sit itaque, voluptatem ipsum. Placeat odit, totam repellat
+      quae non repudiandae alias ipsam exercitationem maiores ut dolore esse,
+      ducimus mollitia in nobis sit. Adipisci quaerat perferendis dicta magnam,
+      totam odio, amet ducimus voluptatibus eveniet quibusdam et explicabo.
+      Natus obcaecati nemo enim culpa explicabo doloremque provident minima
+      odio, inventore aperiam? Voluptate accusantium voluptatem necessitatibus
+      temporibus inventore debitis commodi laboriosam quas ullam expedita,
+      impedit voluptatibus ea quisquam quae quos laudantium est eligendi! Ipsum
+      facere dignissimos ratione dolorem aspernatur modi alias ducimus?</p>
+
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi fuga sunt
+      odio incidunt molestiae obcaecati velit voluptates maiores, blanditiis
+      dolores iste sit itaque, voluptatem ipsum. Placeat odit, totam repellat
+      quae non repudiandae alias ipsam exercitationem maiores ut dolore esse,
+      ducimus mollitia in nobis sit. Adipisci quaerat perferendis dicta magnam,
+      totam odio, amet ducimus voluptatibus eveniet quibusdam et explicabo.
+      Natus obcaecati nemo enim culpa explicabo doloremque provident minima
+      odio, inventore aperiam? Voluptate accusantium voluptatem necessitatibus
+      temporibus inventore debitis commodi laboriosam quas ullam expedita,
+      impedit voluptatibus ea quisquam quae quos laudantium est eligendi! Ipsum
+      facere dignissimos ratione dolorem aspernatur modi alias ducimus?</p>
+      `;
+
+      window.onload = setUpScroll;
+
+      button.addEventListener('click', function() {
+        console.log('Clicked');
+        scroller ^= true;
+        button.innerText = !scroller ? 'Start' : 'Stop';
+        // if (scroller === 1) {
+        //   button.innerText = 'Stop';
+        // } else {
+        //   button.innerText = 'Start';
+        // }
+      });
+
+      cElement.addEventListener('mouseenter', scrollingSpeed);
+      cElement.addEventListener('mouseleave', scrollingSpeed);
+
+      function scrollingSpeed(e) {
+        console.log(e.type);
+        scroller = e.type == 'mouseenter' ? false : true;
+        output.innerHTML = 'Mouse Stopped';
+      }
+
+      function setUpScroll() {
+        sElement.innerHTML = `${content}`;
+        let temp = sElement.getBoundingClientRect();
+        // console.log(temp);
+        cElement.style.height = `${temp.height}px`;
+        sElement.style.top = `${temp.height}px`;
+        scrollInterval = setInterval(scrollingElement, 50);
+      }
+
+      function scrollingElement() {
+        let scrollSpeed = input.value;
+        if (scroller) {
+          let posY = parseInt(sElement.style.top);
+          // console.log(posY);
+          if (posY + sElement.clientHeight > 0) {
+            sElement.style.top = `${posY - scrollSpeed}px`;
+          } else {
+            sElement.style.top = `${sElement.clientHeight}px`;
+          }
+          output.innerHTML = `Scroll Speed: ${scrollSpeed} -- Y Position ${posY}`;
+        }
+      }
+    </script>
+  </body>
+</html>
+
+<!-- const body = document.querySelector('body');
+  button.addEventListener('click', bozo);
+  function bozo() {
+    if (body.style.background === 'white') {
+      body.style.background = 'red';
+    } else {
+      body.style.background = 'white';
+    }
+  } -->

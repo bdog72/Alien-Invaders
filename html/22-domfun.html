@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>DOM Fun</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css"
+      integrity="sha256-piqEf7Ap7CMps8krDQsSOTZgF+MU/0MPyPW2enj5I40="
+      crossorigin="anonymous"
+    />
+    <style>
+      /* body {
+        position: relative;
+        width: 80%;
+        margin: auto;
+        border: 1px solid black;
+      } */
+      .copyMe {
+        display: inline-block;
+        padding: 15px;
+        border: 1px solid black;
+        position: absolute;
+        width: 60px;
+        text-align: center;
+        height: 40px;
+        cursor: pointer;
+      }
+      .newb {
+        color: red;
+      }
+
+      #garbage {
+        position: absolute;
+        height: 100px;
+        width: 100px;
+        /* background: black; */
+        /* left: 50%;
+        top: 30%; */
+        left: 400px;
+        top: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div id="garbage"><i class="fas fa-trash-alt fa-5x"></i></div>
+      <div class="copyMe">Hello</div>
+      <div class="copyMe">Hello World</div>
+      <div class="copyMe">Bozo</div>
+      <div class="copyMe">Molly Moo</div>
+      <div class="copyMe">What Up Dog</div>
+    </div>
+    <script>
+      const garbage = document.querySelector('#garbage');
+      const rep = document.querySelectorAll('.copyMe');
+      let holder = {};
+      rep.forEach(function(element, index) {
+        element.addEventListener('click', function() {
+          // console.log(index);
+          holder.obj = element.cloneNode(true);
+          holder.obj.style.cursor = 'move';
+          holder.obj.classList.add('newb');
+          holder.obj.style.backgroundColor = `#${randomColor()}`;
+          holder.obj.style.left = element.offsetLeft + 'px';
+          holder.obj.style.top = element.offsetTop + 200 + 'px';
+
+          holder.obj.startX = element.offsetLeft;
+          holder.obj.startY = element.offsetTop;
+          holder.obj.moves = Math.floor(Math.random() * 25);
+          holder.obj.int = setInterval(mover, 25);
+
+          function randomColor() {
+            return Math.random()
+              .toString(16)
+              .substr(-6);
+          }
+
+          function mover() {
+            if (holder.obj.moves <= 0) {
+              clearInterval(holder.obj.int);
+            } else {
+              holder.obj.moves--;
+              holder.obj.startX += 1;
+              holder.obj.startY += 10;
+              holder.obj.style.left = `${holder.obj.startX}px`;
+              holder.obj.style.top = `${holder.obj.startY}px`;
+            }
+          }
+
+          document.body.appendChild(holder.obj);
+          dragger(holder.obj);
+        });
+        element.style.left = `${index * 100}px`;
+      });
+
+      function dragger(element) {
+        let position = {};
+        element.onmousedown = dragMouse;
+
+        function dragMouse(el) {
+          position.nx = el.clientX;
+          position.ny = el.clientY;
+
+          // console.log(position.nx, position.ny);
+          document.onmouseup = function() {
+            document.onmouseup = null;
+            document.onmousemove = null;
+          };
+
+          document.onmousemove = function(e) {
+            position.ox = position.nx - e.clientX;
+            position.oy = position.ny - e.clientY;
+            position.nx = e.clientX;
+            position.ny = e.clientY;
+            if (isCollide(element)) {
+              element.onmousedown = null;
+              element.parentElement.removeChild(element);
+            }
+            element.style.top = element.offsetTop - position.oy + 'px';
+            element.style.left = element.offsetLeft - position.ox + 'px';
+          };
+        }
+      }
+      function isCollide(a) {
+        let aRect = a.getBoundingClientRect();
+        let bRect = garbage.getBoundingClientRect();
+        console.log(aRect);
+        return !(
+          aRect.bottom < bRect.top ||
+          aRect.top > bRect.bottom ||
+          aRect.right < bRect.left ||
+          aRect.left > bRect.right
+        );
+      }
+    </script>
+  </body>
+</html>
