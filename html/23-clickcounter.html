@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Click Counter</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <style></style>
+  </head>
+  <body>
+    <script>
+      let counter = 0;
+      document.addEventListener('DOMContentLoaded', function() {
+        const body = document.querySelector('body');
+        let output = document.createElement('div');
+        output.innerHTML = `Click The Button`;
+        output.style.fontSize = '2em';
+        output.style.padding = '5px';
+        output.style.fontFamily = 'Verdana';
+        output.setAttribute('class', 'message container jumbotron');
+        body.appendChild(output);
+
+        let btn = document.createElement('button');
+        btn.innerHTML = 'Click Me Bozo';
+        btn.style.border = '2px solid white';
+        btn.setAttribute('class', 'btn btn-dark ml-2');
+        btn.addEventListener('click', function() {
+          console.log('Clicked');
+          counter++;
+          let mes = `You Clicked the counter ${counter} times`;
+          document.querySelector('.message').innerHTML = mes;
+        });
+
+        body.appendChild(btn);
+      });
+    </script>
+  </body>
+</html>
+
+<!-- document.addEventListener('DOMContentLoaded', bozoBeak);
+  function bozoBeak() {
+    const body = document.querySelector('body');
+    let output = document.createElement('div');
+    console.log(output);
+    output.innerHTML = '<h1>' + 'bozo' + '</h1>';
+    body.appendChild(output);
+  } -->
