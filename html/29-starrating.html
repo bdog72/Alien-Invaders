@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css"
+      integrity="sha256-piqEf7Ap7CMps8krDQsSOTZgF+MU/0MPyPW2enj5I40="
+      crossorigin="anonymous"
+    />
+    <title>Star Rating</title>
+    <style>
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      .star {
+        font-size: 2.5em;
+        color: #ddd;
+        display: inline-block;
+      }
+
+      .yellow {
+        color: yellow;
+      }
+
+      .orange {
+        color: orange;
+      }
+
+      .output {
+        margin: 50px 0;
+        padding: 10px;
+        border: 1px solid #eee;
+        background-color: #ddd;
+      }
+    </style>
+  </head>
+  <body>
+    <ul class="stars">
+      <li class="star"><i class="fa fa-star fa-fw"></i></li>
+      <li class="star"><i class="fa fa-star fa-fw"></i></li>
+      <li class="star"><i class="fa fa-star fa-fw"></i></li>
+      <li class="star"><i class="fa fa-star fa-fw"></i></li>
+      <li class="star"><i class="fa fa-star fa-fw"></i></li>
+    </ul>
+    <div class="output">Message</div>
+    <script>
+      const stars = document.querySelectorAll('.star');
+      const output = document.querySelector('.output');
+
+      for (let x = 0; x < stars.length; x++) {
+        stars[x].starValue = x + 1;
+        console.log(stars[x]);
+        ['mouseover', 'mouseout', 'click'].forEach(function(e) {
+          stars[x].addEventListener(e, starRate);
+        });
+      }
+
+      function starRate(e) {
+        let t = e.type;
+        let starValue = this.starValue;
+
+        if (t === 'click') {
+          if (starValue > 1) {
+            output.innerHTML = `<h1>You rated this ${starValue} stars</h1>`;
+          }
+        }
+        stars.forEach(function(element, index) {
+          if (t === 'click') {
+            if (index < starValue) {
+              element.classList.add('orange');
+            } else {
+              element.classList.remove('orange');
+            }
+          }
+          if (t === 'mouseover') {
+            if (index < starValue) {
+              element.classList.add('yellow');
+            } else {
+              element.classList.remove('yellow');
+            }
+          }
+          if (t === 'mouseout') {
+            element.classList.remove('yellow');
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
