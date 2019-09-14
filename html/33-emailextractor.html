@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style></style>
+  </head>
+  <body>
+    Paste Text: <br />
+    <textarea name="txtarea" id="" cols="50" rows="10">
+Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, libero? bozo@bozo.com Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, bozo1@bozo1.com libero? Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, libero? bozo2_ab-c@bozo2.com</textarea
+    ><br />
+    <button type="button">Get Emails</button>
+    <br />
+    <span class="counter"> </span> Emails In Text:
+    <br />
+    <textarea name="output" id="" cols="50" rows="10"></textarea>
+    <script>
+      const rawText = document.querySelector('textarea[name=txtarea]');
+
+      const finalText = document.querySelector('textarea[name=output]');
+      const counter = document.querySelector('.counter');
+      const btn = document.querySelector('button');
+      btn.addEventListener('click', function() {
+        let temp = rawText.value;
+        let exp = /([A-Za-z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/g;
+        let emailData = temp.match(exp);
+        let holder = [];
+        for (let x = 0; x < emailData.length; x++) {
+          if (holder.indexOf(emailData[x]) == -1) {
+            holder.push(emailData[x]);
+          }
+        }
+        let tempHolder = holder.join(' -- ');
+        counter.innerText = 'Emails found: ' + emailData.length;
+        finalText.innerText = tempHolder;
+      });
+    </script>
+  </body>
+</html>
