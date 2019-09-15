@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      textarea {
+        display: block;
+        width: 75%;
+      }
+      button {
+        /* display: block; */
+        margin: 10px 0;
+        min-width: 90px;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      Source Text: <br />
+      <textarea cols="50" rows="3" name="copyText">Hello Bozo</textarea>
+      <button class="mover-button btn btn-dark m-2">Move Text</button>
+      <button class="copy-button btn btn-dark m-2">Copy Text</button>
+      <textarea name="finalText" cols="50" rows="3"></textarea>
+      <div class="output"></div>
+    </div>
+    <script>
+      const copyText = document.querySelector('textarea[name=copyText]');
+      const finalText = document.querySelector('textarea[name=finalText]');
+      const moverButton = document.querySelector('.mover-button');
+      const copyButton = document.querySelector('.copy-button');
+      const output = document.querySelector('.output');
+
+      moverButton.addEventListener('click', moveText);
+      copyButton.addEventListener('click', copyTextFunction);
+      copyText.addEventListener('click', selectAll);
+      finalText.addEventListener('click', selectAll);
+
+      function moveText() {
+        let temp = copyText.value;
+        finalText.value = temp;
+      }
+
+      function copyTextFunction() {
+        let temp = copyText.value;
+        copyToClipBoard(temp);
+      }
+
+      function copyToClipBoard(str) {
+        const textArea = document.createElement('textarea');
+        textArea.value = str;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        output.innerHTML = `<h3>Copied Content</h3> ${textArea.value}`;
+      }
+
+      function selectAll() {
+        this.select();
+      }
+    </script>
+  </body>
+</html>
