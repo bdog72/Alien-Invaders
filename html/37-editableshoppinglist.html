@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      /* .bozo {
+        color: red;
+      } */
+      span {
+        font-size: 0.8em;
+        /* border: 1px solid black; */
+        padding: 5px;
+        color: red;
+        cursor: pointer;
+        /* margin: 5px; */
+      }
+      td:first-child {
+        width: 250px;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="output"></div>
+    <input type="text" id="add-item" />
+    <input type="button" id="add-new" value="Add Item" />
+    <script>
+      const buttonAdd = document.querySelector('#add-new');
+      const output = document.querySelector('.output');
+      const newItem = document.querySelector('#add-item');
+      buttonAdd.addEventListener('click', function() {
+        console.log('clicked');
+        if (newItem.value) {
+          myList.push(newItem.value);
+          build();
+          newItem.value = '';
+        }
+      });
+
+      let myList = ['bananas', 'milk', 'eggs', 'beer'];
+      window.onload = build;
+
+      function build() {
+        output.innerHTML = '<h1>My List</h1>';
+        const table = document.createElement('table');
+        for (let i = 0; i < myList.length; i++) {
+          const row = document.createElement('tr');
+          row.index = i;
+          const cell1 = document.createElement('td');
+          cell1.innerHTML = myList[i];
+          row.appendChild(cell1);
+          const cell2 = document.createElement('td');
+          const span1 = document.createElement('span');
+          span1.addEventListener('click', function() {
+            console.log(myList[i]);
+            let itemOut = myList.splice(i, 1);
+            console.log(myList);
+            build();
+          });
+          span1.innerHTML = 'Delete';
+          cell2.appendChild(span1);
+          const span2 = document.createElement('span');
+          span2.innerHTML = 'Edit';
+          span2.addEventListener('click', function() {
+            row.style.backgroundColor = 'yellow';
+            let tempElement = row.firstElementChild;
+            const newInput = document.createElement('input');
+            newInput.value = tempElement.innerText;
+            newInput.focus();
+            tempElement.innerHTML = '';
+            tempElement.appendChild(newInput);
+            newInput.addEventListener('blur', function() {
+              tempElement.innerHTML = newInput.value;
+              row.style.backgroundColor = 'white';
+              myList[i] = newInput.value;
+            });
+          });
+
+          cell2.appendChild(span2);
+          row.appendChild(cell2);
+          table.appendChild(row);
+        }
+        console.log(table);
+        output.appendChild(table);
+      }
+    </script>
+  </body>
+</html>
