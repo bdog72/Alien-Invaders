@@ -1,0 +1,34 @@
+@keyframes spin {
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+
+.spinner {
+  font-size: 50px;
+  text-align: center;
+  animation: 2s spin linear infinite;
+  display: none;
+}
+
+.dog-image {
+  display: none;
+  width: 80%;
+  margin: auto;
+}
+
+.show {
+  display: block;
+}
+
+header {
+  /* border: 1px solid black; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+select {
+  max-height: 40px;
+}
