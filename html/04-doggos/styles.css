@@ -22,13 +22,14 @@
 }
 
 header {
-  /* border: 1px solid black; */
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
   padding: 10px;
 }
 
 select {
-  max-height: 40px;
+  /* max-height: 40px; */
+  max-width: 200px;
+  margin-bottom: 20px;
 }
